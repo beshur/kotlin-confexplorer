@@ -31,7 +31,7 @@ dependencies {
     implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion")
 
     //Video Player (chapter 7)
-    implementation(npm("react-player", "2.10.1"))
+    implementation(npm("react-youtube-lite", "1.5.0"))
 
     //Share Buttons (chapter 7)
     implementation(npm("react-share", "4.4.0"))

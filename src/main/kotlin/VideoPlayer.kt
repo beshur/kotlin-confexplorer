@@ -19,6 +19,20 @@ val VideoPlayer = FC<VideoPlayerProps> { props ->
             top = 10.px
             right = 10.px
         }
+        EmailShareButton {
+            url = props.video.videoUrl
+            EmailIcon {
+                size = 32
+                round = true
+            }
+        }
+        TelegramShareButton {
+            url = props.video.videoUrl
+            TelegramIcon {
+                size = 32
+                round = true
+            }
+        }
         h3 {
             +"${props.video.speaker}: ${props.video.title}"
         }
@@ -36,8 +50,8 @@ val VideoPlayer = FC<VideoPlayerProps> { props ->
                 +"Mark as unwatched"
             }
         }
-        img {
-            src = "https://via.placeholder.com/640x360.png?text=Video+Player+Placeholder"
+        ReactYtPlayer {
+            url = props.video.videoUrl
         }
 
     }
