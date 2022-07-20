@@ -5,15 +5,12 @@ import kotlinx.browser.window
 import kotlinx.coroutines.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import csstype.Position
-import csstype.px
-import emotion.react.css
+import kotlinx.serialization.Serializable
 import react.dom.html.ReactHTML.h1
 import react.dom.html.ReactHTML.h3
 import react.dom.html.ReactHTML.div
-import react.dom.html.ReactHTML.p
-import react.dom.html.ReactHTML.img
 
+@Serializable
 data class Video(
     val id: Int,
     val title: String,
@@ -21,7 +18,25 @@ data class Video(
     val videoUrl: String
 )
 
+suspend fun fetchVideo(id: Int): Video {
+    val response = window
+        .fetch("https://my-json-server.typicode.com/kotlin-hands-on/kotlinconf-json/videos/$id")
+        .await()
+        .text()
+        .await()
+    return Json.decodeFromString(response)
+}
 
+suspend fun fetchVideos(): List<Video> = coroutineScope {
+    (1..25).map { id ->
+        async {
+            fetchVideo(id)
+        }
+    }.awaitAll()
+}
+
+
+val mainScope = MainScope()
 
 val App = FC<Props> {
     var currentVideo: Video? by useState(null)
@@ -33,6 +48,12 @@ val App = FC<Props> {
     var watchedVideos: List<Video> by useState(listOf(
         Video(4, "Creating Internal DSLs in Kotlin", "Venkat Subramaniam", "https://youtu.be/JzTeAM8N1-o")
     ))
+
+    useEffectOnce {
+        mainScope.launch {
+            unwatchedVideos = fetchVideos()
+        }
+    }
 
     h1 {
         +"Hello, React+Kotlin/JS!"
