@@ -3,7 +3,7 @@
 
 import react.*
 
-@JsName("ReactYoutube")
+@JsName("default")
 external val ReactYoutube: ComponentClass<ReactYoutubeProps>
 
 external interface ReactYoutubeProps : Props {
