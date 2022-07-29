@@ -12,7 +12,11 @@ external interface VideoPlayerProps : Props {
     var unwatchedVideo: Boolean
 }
 
+val YoutubeVideoIdRegex = Regex("(.*?)(^|/|v=)([a-z0-9_-]{11})(.*)?")
+
 val VideoPlayer = FC<VideoPlayerProps> { props ->
+    var gotVideoId = YoutubeVideoIdRegex.find(props.video.videoUrl)?.value
+
     div {
         css {
             position = Position.absolute
@@ -50,8 +54,8 @@ val VideoPlayer = FC<VideoPlayerProps> { props ->
                 +"Mark as unwatched"
             }
         }
-        ReactYtPlayer {
-            url = props.video.videoUrl
+        ReactYoutube {
+            videoId = gotVideoId
         }
 
     }

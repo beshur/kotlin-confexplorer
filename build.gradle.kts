@@ -32,6 +32,7 @@ dependencies {
 
     //Video Player (chapter 7)
     implementation(npm("react-youtube-lite", "1.5.0"))
+    implementation(npm("react-youtube", "9.0.3"))
 
     //Share Buttons (chapter 7)
     implementation(npm("react-share", "4.4.0"))
